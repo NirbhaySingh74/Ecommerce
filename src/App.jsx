@@ -1,18 +1,15 @@
-import Body from "./components/Body";
+import { Outlet } from "react-router-dom";
+
 import Header from "./components/Header";
-import { useState } from "react";
+import { Provider } from "react-redux"; // Import Provider
+import store from "./utils/store";
 function App() {
-  const [searchInput, setSearchInput] = useState("");
-
-  const handleSearchInputChange = (e) => {
-    setSearchInput(e.target.value);
-  };
-
   return (
-    <>
-      <Header onSearchInputChange={handleSearchInputChange} />
-      <Body searchInput={searchInput} />
-    </>
+    <Provider store={store}>
+      <Header />
+      {/* <Body searchInput={searchInput} /> */}
+      <Outlet />
+    </Provider>
   );
 }
 
