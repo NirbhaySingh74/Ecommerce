@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { PRODUCT_API } from "../utils/constant";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const searchInput = useSelector((state) => state.search.searchInput);
-
+  const searchInput = useSelector((store) => store.search.searchInput);
+  const dispatch = useDispatch();
+  const addFoodItems = (item) => {
+    dispatch(addItem(item));
+    console.log("clicked!");
+  };
   useEffect(() => {
     getData();
   }, []);
@@ -47,7 +52,7 @@ const Products = () => {
   }
 
   return (
-    <div className="w-[90%] ">
+    <div className="w-[90%] my-5">
       <h1 className="m-4 font-bold fw"></h1>
       <div className="flex flex-wrap mx-20 gap-6">
         {filteredProducts.length === 0 ? (
@@ -66,7 +71,7 @@ const Products = () => {
                 <img
                   src={item.images[0]}
                   alt=""
-                  className="object-cover w-full h-full cursor-pointer rounded-xl"
+                  className="object-cover w-full h-full cursor-pointer rounded-xl py-4"
                 />
               </div>
               <h2 className="text-lg font-semibold my-1">{item.title}</h2>
@@ -76,7 +81,10 @@ const Products = () => {
               </div>
               <div className="flex justify-between mt-2 items-center">
                 <h1 className="text-lg font-semibold">${item.price}</h1>
-                <button className="py-2 px-4 bg-[#FF9F00] text-lg font-semibold text-gray-200 rounded-sm">
+                <button
+                  className="py-2 px-4 bg-[#FF9F00] text-lg font-semibold text-gray-200 rounded-sm"
+                  onClick={() => addFoodItems(item)}
+                >
                   Add To Cart
                 </button>
               </div>
