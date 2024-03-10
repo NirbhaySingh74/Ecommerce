@@ -1,11 +1,11 @@
 import Products from "./Products";
 import Sidebar from "./Sidebar";
 
-const Body = ({ searchInput }) => {
+const Body = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <Products searchInput={searchInput} />
+      <Products />
     </div>
   );
 };

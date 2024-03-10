@@ -4,9 +4,10 @@ import Cart from "../assets/cart.png";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSearchInput } from "../utils/cartSlice";
+import { useSelector } from "react-redux";
 const Header = () => {
   const dispatch = useDispatch();
-
+  const cartItems = useSelector((store) => store.cart.items);
   const handleSearchInputChange = (e) => {
     dispatch(setSearchInput(e.target.value));
   };
@@ -28,7 +29,10 @@ const Header = () => {
       </div>
       <div className="col-span-1">
         <Link to="/cart">
-          <img src={Cart} alt="" className="w-10 cursor-pointer" />
+          <span className=" font-bold  absolute top-6 right-[8%] text-red-500">
+            {cartItems.length}
+          </span>
+          <img src={Cart} alt="" className="w-12 h-14 cursor-pointer" />
         </Link>
       </div>
     </div>

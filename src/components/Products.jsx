@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { PRODUCT_API } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../utils/cartSlice";
-
+import { Link } from "react-router-dom";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const searchInput = useSelector((store) => store.search.searchInput);
+  const searchInput = useSelector((store) => store.cart.searchInput);
   const dispatch = useDispatch();
   const addFoodItems = (item) => {
     dispatch(addItem(item));
@@ -52,11 +52,11 @@ const Products = () => {
   }
 
   return (
-    <div className="w-[90%] my-5">
+    <div className="w-[90%] my-5 ">
       <h1 className="m-4 font-bold fw"></h1>
       <div className="flex flex-wrap mx-20 gap-6">
         {filteredProducts.length === 0 ? (
-          <div className="text-center items-center text-lg font-semibold">
+          <div className="text-center items-center text-lg font-semibold bg-white">
             No products found
           </div>
         ) : (
@@ -68,11 +68,13 @@ const Products = () => {
               {/* Set a fixed height for the container div */}
               <div style={{ height: "200px" }}>
                 {/* Set fixed width and height for the image */}
-                <img
-                  src={item.images[0]}
-                  alt=""
-                  className="object-cover w-full h-full cursor-pointer rounded-xl py-4"
-                />
+                <Link to={`products/${item.id}`}>
+                  <img
+                    src={item.images[0]}
+                    alt=""
+                    className="object-cover w-full h-full cursor-pointer rounded-xl py-4"
+                  />
+                </Link>
               </div>
               <h2 className="text-lg font-semibold my-1">{item.title}</h2>
               <div className="flex py-2">
