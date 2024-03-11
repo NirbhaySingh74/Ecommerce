@@ -4,12 +4,16 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     searchInput: "",
-    items: [], // Array of {id, title, price, quantity}
+    filterInput: "", // Add filterInput to the initial state
+    items: [],
     totalAmount: 0,
   },
   reducers: {
     setSearchInput: (state, action) => {
       state.searchInput = action.payload;
+    },
+    setFilterInput: (state, action) => {
+      state.filterInput = action.payload; // Update filterInput state
     },
     addItem: (state, action) => {
       const { id, title, price, images } = action.payload;
@@ -37,6 +41,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addItem, removeItem, setSearchInput } = cartSlice.actions;
+export const { addItem, removeItem, setSearchInput, setFilterInput } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;
