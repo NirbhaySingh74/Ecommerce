@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { PRODUCT_API } from "../utils/constant";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartSlice";
+import ShimmerUi from "./ShimmerUi";
 const AboutProduct = () => {
   const [suggestionData, setSuggestionData] = useState([]);
   const [productData, setProductData] = useState([]);
@@ -41,6 +42,7 @@ const AboutProduct = () => {
     }
   };
   console.log(suggestionData);
+  if (productData.length === 0) return <ShimmerUi />;
   return (
     <div className="m-4">
       {/* product to show */}

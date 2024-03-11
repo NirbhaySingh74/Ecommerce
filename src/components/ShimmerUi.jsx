@@ -1,6 +1,6 @@
 const ShimmerUi = () => {
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden max-w-md m-4">
+    <div className="bg-white shadow-md rounded-lg overflow-hidden max-w-md m-4 items-center">
       <div className="animate-pulse">
         <div className="w-full h-48 bg-gray-300 rounded-lg mb-2"></div>
         <div className="p-4">
