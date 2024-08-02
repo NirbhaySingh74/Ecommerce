@@ -59,9 +59,8 @@ const Products = () => {
   console.log(searchInput);
   console.log(products);
   return (
-    <div className="w-full px-4 mx-3">
-      {/* <h1 className="font-bold text-center my-4">Products</h1> */}
-      <div className="flex flex-wrap justify-center">
+    <div className="w-full px-8 mx-3">
+      <div className="flex flex-wrap justify-center gap-8">
         {filteredProducts.length === 0 ? (
           <div className="text-lg font-semibold text-red-500 flex justify-center">
             <h1>No products found</h1>
@@ -70,7 +69,7 @@ const Products = () => {
           filteredProducts.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4 my-4"
+              className="flex flex-col w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4 my-4 gap-3 shadow-xl transition-transform transform hover:scale-105"
             >
               <Link to={`products/${item.id}`}>
                 <img
@@ -80,14 +79,16 @@ const Products = () => {
                 />
               </Link>
               <h2 className="text-lg font-semibold">{item.title}</h2>
-              <div className="flex py-1">
+              <div className="flex items-center py-1">
                 <span className="bg-green-500 p-1 rounded-full">⭐</span>
                 <h2 className="text-lg font-semibold px-1">{item.rating}</h2>
               </div>
               <div className="flex justify-between items-center">
-                <h1 className="text-lg font-semibold">₹{item.price * 83}</h1>
+                <h1 className="text-lg font-semibold">
+                  ₹{Math.round(item.price * 83)}
+                </h1>
                 <button
-                  className="py-2 px-4 bg-[#FF9F00] text-lg font-semibold text-gray-200 rounded-sm"
+                  className="py-2 px-4 bg-[#FF9F00] text-lg font-semibold text-gray-200 rounded-sm hover:bg-[#FF8500] transition-colors"
                   onClick={() => addItems(item)}
                 >
                   Add To Cart
