@@ -21,8 +21,8 @@ const Products = () => {
   useEffect(() => {
     const filteredProducts = products.filter(
       (product) =>
-        product.title.toLowerCase().includes(searchInput.toLowerCase()) ||
-        product.brand.toLowerCase().includes(searchInput.toLowerCase())
+        product?.title?.toLowerCase().includes(searchInput?.toLowerCase()) ||
+        product?.brand?.toLowerCase().includes(searchInput?.toLowerCase())
       // || product.category.toLowerCase() === filterInput.toLowerCase()
     );
     setFilteredProducts(filteredProducts);
@@ -34,8 +34,8 @@ const Products = () => {
       if (!response.ok) {
         throw new Error("Failed to fetch products");
       }
-      const json = await response.json();
-      setProducts(json.products);
+      const json = await response?.json();
+      setProducts(json?.products);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching products:", error);
