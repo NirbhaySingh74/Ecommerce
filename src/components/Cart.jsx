@@ -32,7 +32,7 @@ const Cart = () => {
                 <h2 className="text-2xl font-bold">{item.title}</h2>
                 <h3 className="text-xl text-gray-600">
                   <h2 className="text-2xl font-bold">
-                    Price: ₹{item.price * item.quantity * 83}
+                    Price: ₹{Math.round(item.price * item.quantity * 83)}
                   </h2>
                 </h3>
                 <div className="flex items-center mt-4 gap-1">
@@ -59,7 +59,7 @@ const Cart = () => {
         ))}
       </div>
       <h2 className="text-center my-3 text-2xl font-bold">
-        Subtotal: ₹{totalAmount * 83}
+        Subtotal: ₹{Math.round(totalAmount * 83)}
       </h2>
     </div>
   );
