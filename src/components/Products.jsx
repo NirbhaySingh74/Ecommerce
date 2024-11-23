@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { PRODUCT_API } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../utils/cartSlice";
 import { Link } from "react-router-dom";
 import ShimmerUi from "./ShimmerUi";
+import debounce from "lodash.debounce";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -11,22 +12,12 @@ const Products = () => {
   const [error, setError] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const searchInput = useSelector((store) => store.cart.searchInput);
-  const filterInput = useSelector((store) => store.cart.filterInput);
+  // const filterInput = useSelector((store) => store.cart.filterInput);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getData();
   }, []);
-
-  useEffect(() => {
-    const filteredProducts = products.filter(
-      (product) =>
-        product?.title?.toLowerCase().includes(searchInput?.toLowerCase()) ||
-        product?.brand?.toLowerCase().includes(searchInput?.toLowerCase())
-      // || product.category.toLowerCase() === filterInput.toLowerCase()
-    );
-    setFilteredProducts(filteredProducts);
-  }, [searchInput, products, filterInput]);
 
   const getData = async () => {
     try {
@@ -44,6 +35,24 @@ const Products = () => {
     }
   };
 
+  const debouncedFilter = useMemo(
+    () =>
+      debounce((searchText) => {
+        const filteredProducts = products.filter(
+          (product) =>
+            product?.title?.toLowerCase().includes(searchText.toLowerCase()) ||
+            product?.brand?.toLowerCase().includes(searchText.toLowerCase())
+        );
+        setFilteredProducts(filteredProducts);
+      }, 300), // 300ms debounce delay
+    [products]
+  );
+
+  useEffect(() => {
+    debouncedFilter(searchInput);
+    return () => debouncedFilter.cancel(); // Cleanup debounce on unmount
+  }, [searchInput, debouncedFilter]);
+
   const addItems = (item) => {
     dispatch(addItem(item));
     console.log("clicked!");
@@ -56,8 +65,7 @@ const Products = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-  console.log(searchInput);
-  console.log(products);
+
   return (
     <div className="w-full px-8 mx-3">
       <div className="flex flex-wrap justify-center gap-8">
